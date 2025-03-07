@@ -1,10 +1,53 @@
+<html lang="en">
+<meta charset="utf8">
+<body>
+
+<h1> Три способа добавить js </h1>
+
+<pre>
+    &lt;script src=&quot;&quot;&gt;&lt;script&gt;
+    &lt;button onclick=&quot;some_function()&quot;&gt;click me&lt;/button&gt;
+    &lt;script&gt; код js &lt;script&gt;
+</pre>
+
+<button onclick="some_function();"> click me </button>
+
+<h1>Таблица 100x100</h1>
+<table id="myTable"></table>
+
 <script>
-    
     function some_function()
     {
 
     }
 
-    some_function();
+    window.onload = function()
+    {
+        some_function();
+    }
 
+    const table = document.getElementById("myTable");
+
+    for (let i = 0; i < 100; i++)
+    {
+        const row = document.createElement("tr");
+        for (let j = 0; j < 100; j++)
+        {
+            const cell = document.createElement("td");
+            cell.textContent = `${i + 1}-${j + 1}`;
+
+            cell.style.backgroundColor = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
+
+            cell.onclick = function()
+            {
+                alert(`Вы кликнули на ячейку: ${i + 1}-${j + 1}`);
+            };
+
+            row.appendChild(cell);
+        }
+        table.appendChild(row);
+    }
+    
 </script>
+</body>
+</html>
