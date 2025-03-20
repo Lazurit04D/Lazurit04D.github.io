@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <title>Site</title>
+    <style>
+        *{    
+    font-family: 'Montserrat', sans-serif;
+}
+body{
+    background-color: rgb(186, 241, 186);
+}
+table{
+    width:35% ;
+    text-align: center; 
+    border-collapse:collapse ; 
+    }
+button {
+    color: black;
+    padding: 15px 15px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 2px 2px;
+    cursor: pointer;
+    background-color: azure;
+}
+.time {
+    background-color: rgb(0, 137, 2);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 8px;
+    margin-right: 5px;
+    display: inline-block;
+}
+.name {
+    background-color: rgb(58, 205, 94);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 8px;
+    margin-right: 5px;
+    display: inline-block;
+}
+.a { text-decoration: underline;
+padding-left:3vw;}
+    </style>
+</head>
+
+<body>
+    <a href="index.html">Главная</a>
+    <a href="page1.html">Страница 1</a>
+    <a href="page2.html">Страница 2</a>
+    <a href="page3.html">Страница 3</a>
+    <a href="page4.html">Страница 4</a>
+    <a href="bootstrap.html">Bootstrap</a>
+    <a href="table100.html">The 100 table</a>
+    <h1>Chat:</h1>
+    <div id="chat"></div>
+
+    <script>
+       function getRandomInt(max) {
+            //округление       //случ 
+            return Math.floor(Math.random() * max);
+        }
+         // пустой массив для сообщений
+        const messages = [];
+        const names = ["Alice", "Bob", "Charlie", "David", "Eve","Kate"];
+        const questions = ["Hello?", "Hi?", "How are you?", "How is your day?", "What's up?"];
+        const answers = ["Fine", "Hello", "Thats some answer", "Не хочу отвечать!" ,"Плохо"];
+        //html контейнер для сообщений
+        const chatContainer = document.getElementById("chat");
+        for (let i = 0; i < 100; i++) {
+            //случайное время
+            add_message('q');
+            add_message('a');
+        }
+   function add_message(message_type) {
+
+
+    const time = getRandomInt(24) + ':' + getRandomInt(60);
+            //случайное имя
+            let message;
+            const name = names[getRandomInt(names.length)];
+            //случайное сообщение
+            if(message_type=='q') { message  = questions[getRandomInt(questions.length)]; }
+            if(message_type=='a') { message  = answers[getRandomInt(answers.length)]; }
+            let chat_row = document.createElement("p");
+            
+            let name_span = document.createElement("span");
+            name_span.className="name";
+            name_span.append(name);
+            let time_span = document.createElement("span");
+            time_span.className="time";
+            time_span.append(time);
+            let message_span = document.createElement("span");
+            message_span.className=message_type;
+            message_span.append(message);
+            
+            chat_row.append(time_span,name_span,message_span);
+            chatContainer.append(chat_row);
+            
+   }    
+  
+    </script>
+</body>
+
+</html>
