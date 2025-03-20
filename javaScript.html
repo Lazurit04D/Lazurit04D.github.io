@@ -12,10 +12,55 @@
 
 <button onclick="some_function();"> click me </button>
 
+<h1>Случайные сообщения</h1>
+<div id="messages"></div>
+<button onclick="generateMessages();">Регенерировать сообщения</button>
+
 <h1>Таблица 100x100</h1>
 <table id="myTable"></table>
 
 <script>
+    function generateMessages()
+    {
+        const names = ["Alice", "Bob", "Charlie", "David", "Eve"];
+        const messages = [
+            "Hello!",
+            "How are you?",
+            "See you later!",
+            "What's up?",
+            "Nice to meet you!",
+            "Let's go!",
+            "I'm on my way.",
+            "Can you help me?",
+            "Good morning!",
+            "Good night!"
+        ];
+
+        function getRandomElement(array)
+        {
+            return array[Math.floor(Math.random() * array.length)];
+        }
+
+        function getRandomTime()
+        {
+            return `${Math.floor(Math.random() * 24)}:${Math.floor(Math.random() * 60)}`;
+        }
+
+        const messagesDiv = document.getElementById("messages");
+        messagesDiv.innerHTML = "";
+
+        for (let i = 0; i < 10; i++)
+        {
+            const time = getRandomTime();
+            const name = getRandomElement(names);
+            const message = getRandomElement(messages);
+
+            const messageElement = document.createElement("div");
+            messageElement.textContent = `${time} ${name}: ${message}`;
+            messagesDiv.appendChild(messageElement);
+        }
+    }
+
     function some_function()
     {
 
@@ -24,6 +69,7 @@
     window.onload = function()
     {
         some_function();
+        generateMessages();
     }
 
     const table = document.getElementById("myTable");
