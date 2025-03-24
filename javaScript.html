@@ -1,106 +1,139 @@
+<!DOCTYPE html>
 <html lang="en">
-<meta charset="utf8">
+<meta charset="UTF-8">
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css">
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
 <body>
 
-<button onclick="main();"> Главная </button>
+    <button onclick="main();"> Главная </button>
+    <h1> Три способа добавить js </h1>
+    <pre>
+        &lt;script src=&quot;&quot;&gt;&lt;script&gt;
+        &lt;button onclick=&quot;some_function()&quot;&gt;click me&lt;/button&gt;
+        &lt;script&gt; код js &lt;script&gt;
+    </pre>
+    <button onclick="some_function();"> click me </button>
 
-<h1> Три способа добавить js </h1>
+    <h1>Случайные сообщения (Апгрейд):</h1>
+    <div class="container-fluid">
+        <table style="width:25vw;" class="table table-striped table-bordered table-hover" id="chat">
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Name</th>
+                    <th>Message</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
 
-<pre>
-    &lt;script src=&quot;&quot;&gt;&lt;script&gt;
-    &lt;button onclick=&quot;some_function()&quot;&gt;click me&lt;/button&gt;
-    &lt;script&gt; код js &lt;script&gt;
-</pre>
+    <h1>Таблица 100x100</h1>
+    <table id="myTable"></table>
 
-<button onclick="some_function();"> click me </button>
+    <script>
 
-<h1>Случайные сообщения</h1>
-<div id="messages"></div>
-<button onclick="generateMessages();">Регенерировать сообщения</button>
-
-<h1>Таблица 100x100</h1>
-<table id="myTable"></table>
-
-<script>
-    function generateMessages()
-    {
-        const names = ["Alice", "Bob", "Charlie", "David", "Eve"];
-        const messages = [
-            "Hello!",
-            "How are you?",
-            "See you later!",
-            "What's up?",
-            "Nice to meet you!",
-            "Let's go!",
-            "I'm on my way.",
-            "Can you help me?",
-            "Good morning!",
-            "Good night!"
-        ];
-
-        function getRandomElement(array)
+        function main()
         {
-            return array[Math.floor(Math.random() * array.length)];
+            window.location.href = "index.html";
         }
 
-        function getRandomTime()
+        function some_function()
         {
-            return `${Math.floor(Math.random() * 24)}:${Math.floor(Math.random() * 60)}`;
+
         }
 
-        const messagesDiv = document.getElementById("messages");
-        messagesDiv.innerHTML = "";
-
-        for (let i = 0; i < 10; i++)
+        window.onload = function()
         {
-            const time = getRandomTime();
-            const name = getRandomElement(names);
-            const message = getRandomElement(messages);
+            some_function();
 
-            const messageElement = document.createElement("div");
-            messageElement.textContent = `${time} ${name}: ${message}`;
-            messagesDiv.appendChild(messageElement);
-        }
-    }
+            const chatContainer = document.getElementById("chat").getElementsByTagName('tbody')[0];
+            const names = ["Alice", "Bob", "Charlie", "David", "Eve", "Kate"];
+            const questions = ["Hello?", "Hi?", "How are you?", "How is your day?", "What's up?"];
+            const answers = ["Fine", "Hello", "Thats some answer", "Не хочу отвечать!", "Плохо"];
 
-    function main()
-    {
-        window.location.href = "index.html";
-    }
-
-    function some_function()
-    {
-
-    }
-
-    window.onload = function()
-    {
-        some_function();
-        generateMessages();
-    }
-
-    const table = document.getElementById("myTable");
-
-    for (let i = 0; i < 100; i++)
-    {
-        const row = document.createElement("tr");
-        for (let j = 0; j < 100; j++)
-        {
-            const cell = document.createElement("td");
-            cell.textContent = `${i + 1}-${j + 1}`;
-
-            cell.style.backgroundColor = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
-
-            cell.onclick = function()
+            for (let i = 0; i < 100; i++)
             {
-                alert(`Вы кликнули на ячейку: ${i + 1}-${j + 1}`);
-            };
+                add_message('q');
+                add_message('a');
+            }
 
-            row.appendChild(cell);
+            function add_message(message_type)
+            {
+                const time = getRandomInt(24) + ':' + getRandomInt(60);
+                const name = names[getRandomInt(names.length)];
+                let message;
+
+                if (message_type == 'q')
+                {
+                    message = questions[getRandomInt(questions.length)];
+                }
+                if (message_type == 'a')
+                {
+                    message = answers[getRandomInt(answers.length)];
+                }
+
+                let chat_row = document.createElement("tr");
+
+                let time_span = document.createElement("td");
+                time_span.textContent = time;
+
+                let name_span = document.createElement("td");
+                name_span.textContent = name;
+
+                let message_span = document.createElement("td");
+                message_span.textContent = message;
+
+                chat_row.append(time_span, name_span, message_span);
+                chatContainer.append(chat_row);
+            }
+
+            $('#chat').DataTable({
+                paging: true,
+                searching: true,
+                ordering: true,
+                info: true,
+                pageLength: 10,
+                lengthMenu: [10, 25, 50, 100]
+            });
+
+            const table = document.getElementById("myTable");
+
+            for (let i = 0; i < 100; i++)
+            {
+                const row = document.createElement("tr");
+                for (let j = 0; j < 100; j++)
+                {
+                    const cell = document.createElement("td");
+                    cell.textContent = `${i + 1}-${j + 1}`;
+
+                    cell.style.backgroundColor = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
+
+                    cell.onclick = function()
+                    {
+                        alert(`Вы кликнули на ячейку: ${i + 1}-${j + 1}`);
+                    };
+
+                    row.appendChild(cell);
+                }
+                table.appendChild(row);
+            }
         }
-        table.appendChild(row);
-    }
+
+        function getRandomInt(max)
+        {
+            return Math.floor(Math.random() * max);
+        }
+
+    </script>
     
-</script>
 </body>
 </html>
