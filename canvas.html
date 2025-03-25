@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Рисовалка</title>
+    <style>
+        .controls
+        {
+            display: flex;
+            gap: 10px;
+        }
+        button
+        {
+            background-color: #af4c4c;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover
+        {
+            background-color: #842b2b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Рисовалка</h1>
+        
+        <div class="controls">
+            <button id="clearBtn">Очистить</button>
+            <div class="color-picker">
+                <span>Цвет:</span>
+                <input type="color" id="colorPicker" value="#000000">
+            </div>
+            <div class="color-picker">
+                <span>Размер:</span>
+                <input type="range" id="sizePicker" min="1" max="50" value="5">
+            </div>
+        </div>
+        
+        <div class="canvas-container">
+            <canvas id="drawingCanvas" width="1250" height="500"></canvas>
+        </div>
+        
+        <div class="coords">
+            Координаты: <span id="coords">0, 0</span>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function()
+        {
+            const canvas = document.getElementById('drawingCanvas');
+            const ctx = canvas.getContext('2d');
+            const coordsDisplay = document.getElementById('coords');
+            const clearBtn = document.getElementById('clearBtn');
+            const colorPicker = document.getElementById('colorPicker');
+            const sizePicker = document.getElementById('sizePicker');
+            
+            let isDrawing = false;
+            let lastX = 0;
+            let lastY = 0;
+            
+            let currentColor = '#000000';
+            let currentSize = 5;
+            
+            function initCanvas()
+            {
+                ctx.fillStyle = 'white';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.strokeStyle = currentColor;
+                ctx.lineWidth = currentSize;
+                ctx.lineJoin = 'round';
+                ctx.lineCap = 'round';
+            }
+        
+            function clearCanvas()
+            {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                initCanvas();
+            }
+
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
+            clearBtn.addEventListener('click', clearCanvas);
+            colorPicker.addEventListener('input', updateColor);
+            sizePicker.addEventListener('input', updateSize);
+            
+            function startDrawing(e)
+            {
+                isDrawing = true;
+                [lastX, lastY] = [e.offsetX, e.offsetY];
+            }
+            
+            function draw(e)
+            {
+                if (!isDrawing)
+                {
+                    coordsDisplay.textContent = `${e.offsetX}, ${e.offsetY}`;
+                    return;
+                }
+                
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+                ctx.lineTo(e.offsetX, e.offsetY);
+                ctx.stroke();
+                
+                [lastX, lastY] = [e.offsetX, e.offsetY];
+                coordsDisplay.textContent = `${e.offsetX}, ${e.offsetY}`;
+            }
+            
+            function stopDrawing()
+            {
+                isDrawing = false;
+            }
+            
+            function updateColor(e)
+            {
+                currentColor = e.target.value;
+                ctx.strokeStyle = currentColor;
+            }
+            
+            function updateSize(e)
+            {
+                currentSize = e.target.value;
+                ctx.lineWidth = currentSize;
+            }
+            
+            initCanvas();
+        });
+    </script>
+</body>
+</html>
