@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Flutter (Debug Web with Task)",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "deviceId": "edge",
+            "preLaunchTask": "Flutter Run Web (Edge)",
+            "args": [],
+            "flutterMode": "debug"
+        }
+    ]
+}
