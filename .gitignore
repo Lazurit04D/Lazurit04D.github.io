@@ -1,0 +1,29 @@
+# Flutter
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.vs_code
+build/
+.dart_tool/
+.idea/
+.ios/
+.android/
+.macos/
+.windows/
+.linux/
+.fvm/
+!/flutter/
+!/flutter/*/
+!/flutter/flutter_application_1/
+!/flutter/flutter_application_1/lib/
+!/flutter/flutter_application_1/assets/
+!/flutter/flutter_application_1/pubspec.yaml
+!/flutter/flutter_application_1/test/
+# Generated Flutter files
+flutter/flutter_application_1/linux/flutter/generated_plugin_registrant.cc
+flutter/flutter_application_1/linux/flutter/generated_plugin_registrant.h
+flutter/flutter_application_1/linux/flutter/generated_plugins.cmake
+flutter/flutter_application_1/macos/Flutter/GeneratedPluginRegistrant.swift
+flutter/flutter_application_1/windows/flutter/generated_plugin_registrant.cc
+flutter/flutter_application_1/windows/flutter/generated_plugin_registrant.h
+flutter/flutter_application_1/windows/flutter/generated_plugins.cmake
